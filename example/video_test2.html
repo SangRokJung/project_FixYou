@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            height: 400vh;
+        }
+
+        .main-video {
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            window.addEventListener('load', () => {
+                const elmVideo = document.querySelector('.main-video')
+                let rate       = 0;
+
+                    document.body.clientHeight
+
+                window.addEventListener('scroll', () => {
+                    rate = scrollY / (document.body.offsetHeight - window.innerHeight);
+
+                    if (rate > 1) {
+                        rate = 1;
+                    }
+                    elmVideo.currentTime = elmVideo.duration * rate;
+                })
+            });
+        })
+
+
+    </script>
+</head>
+<body>
+    <div class="video-container">
+        <video class="main-video" src="./DS_sample.mp4" muted></video>
+    </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            height: 600vh;
+            overflow-x: hidden;
+        }
+
+        #main-canvas {
+            left: 0;
+            top: 0;
+
+            position: fixed;
+            background-color: beige;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainCanvasTag = document.querySelector('#main-canvas')
+            const context = mainCanvasTag.getContext('2d');
+
+            const canvasImages = [];
+            const imageCount = 165;
+
+            let index = 0;
+
+            //이미지 파일을 로딩하는 함수.
+            const loadImages = function() {
+                let eleImage = null;
+
+                for (let i=0; i < imageCount; i++){
+                    eleImage = new Image();
+                    eleImage.src = `./capture/DS_${i}.png`
+                    canvasImages.push(eleImage);
+                }
+            }
+            loadImages();
+
+            window.addEventListener('scroll', () => {
+                // 윈도우의 스크롤 값 (보안상의 문제로 scrollY를 사용한다.)
+                // window.scrollY 
+                // window.pageYOffset
+                let rate = 0;
+
+                let index = 0;
+
+                rate = window.scrollY / (document.body.offsetHeight - window.innerHeight)           
+                //                                                    현재 보여지는 화면 높이
+
+                if (rate >= 1) {
+                    rate = 1;
+                }
+                else if (rate <= 0) {
+                    rate = 0;
+                }
+
+                index = Math.floor((imageCount - 1) * rate);
+                //math.floor = 버림
+
+                context.drawImage(canvasImages[index], 0, 0)
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <canvas id="main-canvas" width="1920" height="1080"></canvas>
+</body>
+</html>

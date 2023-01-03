@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 600vh;
+            overflow-x: hidden;
+        }
+
+        #main-canvas {
+            position: fixed;
+            left: 0;
+            top : 0;
+            background-color: beige; 
+
+        }
+
+
+    </style>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        const mainCanvas = document.querySelector('#main-canvas');
+        const context = mainCanvas.getContext('2d');
+        
+
+        const canvasImages = [];
+        const imageCount = 165;
+        let index = 0;
+
+        //이미지 파일을 로딩하는 함수.
+        const loadImages = function()
+        {
+            let elmImage = null;
+            for (let i = 0; i < imageCount; i++)
+            {                
+                elmImage = new Image();
+            
+                elmImage.src = `./capture/DS_${i}.png`;
+                canvasImages.push(elmImage);
+            }
+        }
+
+        loadImages();
+
+
+        window.addEventListener('scroll', ()=>{
+            let rate = 0;
+            let index = 0;
+
+            rate =  scrollY / (document.body.offsetHeight- window.innerHeight);
+
+            if (rate > 1)
+                rate = 1;
+
+            if (rate < 0)
+                rate = 0;
+
+
+            index = Math.floor((imageCount - 1) * rate);            
+            context.drawImage(canvasImages[index], 0, 0);       
+            
+        });
+
+
+
+
+
+
+
+    });
+
+    </script>
+
+
+</head>
+<body>
+    <canvas id="main-canvas" width="1920" height="1080"></canvas>
+    
+    
+</body>
+</html>
